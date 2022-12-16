@@ -19,4 +19,13 @@ class AppTest {
             CAPITAL_ESZETT.toLowerCase(new Locale("de", "CH"))
       );
    }
+
+   @Test
+   void localeDependentUppercase() {
+      // See: https://wiki.sei.cmu.edu/confluence/display/java/STR02-J.+Specify+an+appropriate+locale+when+comparing+locale-dependent+data
+      Assertions.assertNotEquals(
+            "i".toUpperCase(new Locale("en", "US")),
+            "i".toUpperCase(new Locale("tr", "TR"))
+      );
+   }
 }
