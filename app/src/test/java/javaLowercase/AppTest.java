@@ -13,27 +13,33 @@ import static javaLowercase.App.CAPITAL_ESZETT;
 
 class AppTest {
    @ParameterizedTest
-   // The challenge: Find a string that makes this test pass
+   // The challenge: Find a string and two locales that makes this test pass
    @CsvSource({
-         CAPITAL_ESZETT
+         CAPITAL_ESZETT + ",de,DE,de,CH"
    })
-   void localeDependentLowercase(String candidate) {
+   void localeDependentLowercase(
+         String candidate,
+         String firstLang, String firstCountry,
+         String secondLang, String secondCountry) {
       // See: https://www.oracle.com/java/technologies/javase/jdk8-jre8-suported-locales.html
       Assertions.assertNotEquals(
-            candidate.toLowerCase(new Locale("de", "DE")),
-            candidate.toLowerCase(new Locale("de", "CH"))
+            candidate.toLowerCase(new Locale(firstLang, firstCountry)),
+            candidate.toLowerCase(new Locale(secondLang, secondCountry))
       );
    }
 
    @ParameterizedTest
    @CsvSource({
-         "i"
+         "i,en,US,tr,TR"
    })
-   void localeDependentUppercase(String candidate) {
+   void localeDependentUppercase(
+         String candidate,
+         String firstLang, String firstCountry,
+         String secondLang, String secondCountry) {
       // See: https://wiki.sei.cmu.edu/confluence/display/java/STR02-J.+Specify+an+appropriate+locale+when+comparing+locale-dependent+data
       Assertions.assertNotEquals(
-            candidate.toUpperCase(new Locale("en", "US")),
-            candidate.toUpperCase(new Locale("tr", "TR"))
+            candidate.toUpperCase(new Locale(firstLang, firstCountry)),
+            candidate.toUpperCase(new Locale(secondLang, secondCountry))
       );
    }
 }
