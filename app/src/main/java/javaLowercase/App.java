@@ -10,5 +10,11 @@ public class App {
         System.out.println(CAPITAL_ESZETT);
         System.out.println(CAPITAL_ESZETT.toLowerCase(new Locale("de", "DE")));
         System.out.println(CAPITAL_ESZETT.toLowerCase(new Locale("de", "CH")));
+
+        System.out.println();
+
+        System.out.println("i");
+        System.out.println("i".toUpperCase(new Locale("en", "US")));
+        System.out.println("i".toUpperCase(new Locale("tr", "TR")));
     }
 }
