@@ -15,16 +15,32 @@ class AppTest {
    @ParameterizedTest
    // The challenge: Find a string and two locales that makes this test pass
    @CsvSource({
-         CAPITAL_ESZETT + ",de,DE,de,CH"
+         //CAPITAL_ESZETT + ",de,DE,de,CH",
+         "\u0130,en,US,tr,TR"
    })
+   // See: https://www.oracle.com/java/technologies/javase/jdk8-jre8-suported-locales.html
+   //      https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.text/lowercase.html
    void localeDependentLowercase(
          String candidate,
          String firstLang, String firstCountry,
          String secondLang, String secondCountry) {
-      // See: https://www.oracle.com/java/technologies/javase/jdk8-jre8-suported-locales.html
+
+      Locale firstLocale = new Locale(firstLang, firstCountry);
+      Locale secondLocale = new Locale(secondLang, secondCountry);
+
+      String firstLocaleLowercase = candidate.toLowerCase(firstLocale);
+      String secondLocaleLowercase = candidate.toLowerCase(secondLocale);
+
+      System.out.println(
+            String.format("Testing <%s>\nlowercase for %s-%s: %s (length: %d)\nlowercase for %s-%s: %s (length: %d)",
+                  candidate,
+                  firstLang, firstCountry, firstLocaleLowercase, firstLocaleLowercase.length(),
+                  secondLang, secondCountry, secondLocaleLowercase, firstLocaleLowercase.length()
+            ));
+
       Assertions.assertNotEquals(
-            candidate.toLowerCase(new Locale(firstLang, firstCountry)),
-            candidate.toLowerCase(new Locale(secondLang, secondCountry))
+            firstLocaleLowercase,
+            secondLocaleLowercase
       );
    }
 
@@ -32,14 +48,28 @@ class AppTest {
    @CsvSource({
          "i,en,US,tr,TR"
    })
+   // See: https://wiki.sei.cmu.edu/confluence/display/java/STR02-J.+Specify+an+appropriate+locale+when+comparing+locale-dependent+data
    void localeDependentUppercase(
          String candidate,
          String firstLang, String firstCountry,
          String secondLang, String secondCountry) {
-      // See: https://wiki.sei.cmu.edu/confluence/display/java/STR02-J.+Specify+an+appropriate+locale+when+comparing+locale-dependent+data
+
+      Locale firstLocale = new Locale(firstLang, firstCountry);
+      Locale secondLocale = new Locale(secondLang, secondCountry);
+
+      String firstLocaleUppercase = candidate.toUpperCase(firstLocale);
+      String secondLocaleUppercase = candidate.toUpperCase(secondLocale);
+
+      System.out.println(
+            String.format("Testing <%s>\nuppercase for %s-%s: %s (length: %d)\nuppercase for %s-%s: %s (length: %d)",
+                  candidate,
+                  firstLang, firstCountry, firstLocaleUppercase, firstLocaleUppercase.length(),
+                  secondLang, secondCountry, secondLocaleUppercase, secondLocaleUppercase.length()
+            ));
+
       Assertions.assertNotEquals(
-            candidate.toUpperCase(new Locale(firstLang, firstCountry)),
-            candidate.toUpperCase(new Locale(secondLang, secondCountry))
+            firstLocaleUppercase,
+            secondLocaleUppercase
       );
    }
 }
