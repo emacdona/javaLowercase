@@ -13,9 +13,10 @@ import static javaLowercase.App.CAPITAL_ESZETT;
 class AppTest {
    @Test
    void localeDependentLowercase() {
-       Assertions.assertNotEquals(
-        CAPITAL_ESZETT.toLowerCase(new Locale("de", "DE")),
-        CAPITAL_ESZETT.toLowerCase(new Locale("de", "CH"))
-       );
+      // See: https://www.oracle.com/java/technologies/javase/jdk8-jre8-suported-locales.html
+      Assertions.assertNotEquals(
+            CAPITAL_ESZETT.toLowerCase(new Locale("de", "DE")),
+            CAPITAL_ESZETT.toLowerCase(new Locale("de", "CH"))
+      );
    }
 }
