@@ -4,28 +4,36 @@
 package javaLowercase;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Locale;
 
 import static javaLowercase.App.CAPITAL_ESZETT;
 
 class AppTest {
-   @Test
-   void localeDependentLowercase() {
+   @ParameterizedTest
+   // The challenge: Find a string that makes this test pass
+   @CsvSource({
+         CAPITAL_ESZETT
+   })
+   void localeDependentLowercase(String candidate) {
       // See: https://www.oracle.com/java/technologies/javase/jdk8-jre8-suported-locales.html
       Assertions.assertNotEquals(
-            CAPITAL_ESZETT.toLowerCase(new Locale("de", "DE")),
-            CAPITAL_ESZETT.toLowerCase(new Locale("de", "CH"))
+            candidate.toLowerCase(new Locale("de", "DE")),
+            candidate.toLowerCase(new Locale("de", "CH"))
       );
    }
 
-   @Test
-   void localeDependentUppercase() {
+   @ParameterizedTest
+   @CsvSource({
+         "i"
+   })
+   void localeDependentUppercase(String candidate) {
       // See: https://wiki.sei.cmu.edu/confluence/display/java/STR02-J.+Specify+an+appropriate+locale+when+comparing+locale-dependent+data
       Assertions.assertNotEquals(
-            "i".toUpperCase(new Locale("en", "US")),
-            "i".toUpperCase(new Locale("tr", "TR"))
+            candidate.toUpperCase(new Locale("en", "US")),
+            candidate.toUpperCase(new Locale("tr", "TR"))
       );
    }
 }
